@@ -1,13 +1,12 @@
-public class Caesar {
+public class CaesarCipher {
 
     private static final String RUSSIAN_ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
     private static final String ENGLISH_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    private static final String SYMBOLS = " ,!.?\"—-:;()";
 
-    public static String processText(String text, int shift, boolean isEncrypt) {
-        if(text.isEmpty()) return "";
+    private static String processText(String text, int shift, boolean isEncrypt) {
+        if (text.isEmpty()) return "";
 
-        if (!isEncrypt) shift *= -1;
+        shift = isEncrypt ? shift : -shift;
 
         StringBuilder result = new StringBuilder();
 
@@ -16,7 +15,7 @@ public class Caesar {
             char lowerCaseChar = Character.toLowerCase(originalChar);
 
             String alphabet = getAlphabet(lowerCaseChar);
-            if (alphabet == null || SYMBOLS.indexOf(lowerCaseChar) >= 0) {
+            if (alphabet == null) {
                 result.append(originalChar);
                 continue;
             }
@@ -35,6 +34,14 @@ public class Caesar {
         if (RUSSIAN_ALPHABET.indexOf(c) >= 0) return RUSSIAN_ALPHABET;
         if (ENGLISH_ALPHABET.indexOf(c) >= 0) return ENGLISH_ALPHABET;
         return null;
+    }
+
+    public static String encrypt(String text, int shift) {
+        return processText(text, shift, true);
+    }
+
+    public static String decrypt(String text, int shift) {
+        return processText(text, shift, false);
     }
 }
 

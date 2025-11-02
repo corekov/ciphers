@@ -1,9 +1,9 @@
-void main() throws Exception {
+void main() {
     String textRu = "Нет хуже причины для выбора имени с, чем та, что имена a и b уже заняты.\n";
-    String textEn = "There is no worse reason to choose the name c than the fact that the names a and b are already occupied.\n";
+    String textEn = "There is no worse reason to choose the name c than the fact that the names a and b are already occupied. \n";
     caesarTest(textRu, textEn);
     vigenereTest(textRu, textEn);
-    rsaTest(textRu);
+    rsaTest(textEn);
 }
 
 void caesarTest(String textRu, String textEn) {
@@ -38,17 +38,14 @@ void vigenereTest(String textRu, String textEn) {
     IO.println("Расшифровано (английский):\n" + decryptedEn);
 }
 
-void rsaTest(String text) throws Exception {
+void rsaTest(String text)  {
     IO.println("\nТесты для RSA\n");
-    KeyPair keyPair = RSAExample.generateKeyPair();
-    PublicKey publicKey = keyPair.getPublic();
-    PrivateKey privateKey = keyPair.getPrivate();
-
+    SimpleRSA rsa = new SimpleRSA();
     System.out.println("Оригинал: " + text);
 
-    String encryptedMessage = RSAExample.encrypt(text, publicKey);
-    System.out.println("Зашифровано: " + encryptedMessage);
+    String encrypted = rsa.encrypt(text);
+    System.out.println("Зашифровано: " + encrypted);
 
-    String decryptedMessage = RSAExample.decrypt(encryptedMessage, privateKey);
-    System.out.println("Расшифровано: " + decryptedMessage);
+    String decrypted = rsa.decrypt(encrypted);
+    System.out.println("Расшифровано: " + decrypted);
 }
